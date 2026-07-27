@@ -1,0 +1,109 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1 class="form-title">
+      @if (editIndex === -1) { Add Student }
+      @else { Edit Student }
+    </h1>
+    <p class="form-subtitle">Fill in the details below</p>
+  </div>
+
+  <div class="form-card">
+    <form [formGroup]="studentForm">
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name" class="form-label">Name</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="form-input"
+          placeholder="Enter student name"
+        >
+        @if (studentForm.controls.name.touched && studentForm.controls.name.errors?.['required']) {
+          <p class="error-message">Name is required</p>
+        }
+        @if (studentForm.controls.name.errors?.['nameLength']) {
+          <p class="error-message">Name must be at least 3 characters</p>
+        }
+      </div>
+
+      <!-- Age Field -->
+      <div class="form-group">
+        <label for="age" class="form-label">Age</label>
+        <input
+          id="age"
+          type="number"
+          formControlName="age"
+          class="form-input"
+          placeholder="Enter age"
+        >
+        @if (studentForm.controls.age.touched && studentForm.controls.age.errors?.['required']) {
+          <p class="error-message">Age is required</p>
+        }
+        @if (studentForm.controls.age.errors?.['min']) {
+          <p class="error-message">Age must be positive</p>
+        }
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="form-input"
+          placeholder="Enter email address"
+        >
+        @if (studentForm.controls.email.touched && studentForm.controls.email.errors?.['email']) {
+          <p class="error-message">Please enter a valid email</p>
+        }
+      </div>
+
+      <!-- City Field -->
+      <div class="form-group">
+        <label for="city" class="form-label">City</label>
+        <input
+          id="city"
+          type="text"
+          formControlName="city"
+          class="form-input"
+          placeholder="Enter city"
+        >
+      </div>
+
+      <!-- Phone Numbers Section -->
+      <div class="phone-section">
+        <div class="section-header">
+          <h3 class="section-title">Phone Numbers</h3>
+          <button type="button" class="btn btn-secondary" (click)="addPhone()">
+            + Add Phone
+          </button>
+        </div>
+        <div class="phones-list">
+          @for (phone of phones.controls; track $index) {
+            <input
+              [formControl]="$any(phone)"
+              type="tel"
+              class="form-input phone-input"
+              placeholder="Enter phone number"
+            >
+          }
+          @if (phones.length === 0) {
+            <p class="empty-phones">No phone numbers added yet</p>
+          }
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="button"
+        class="btn btn-primary btn-submit"
+        (click)="submit()"
+      >
+        @if (editIndex === -1) { Submit }
+        @else { Update }
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Student Management</h1>
+    <p class="page-subtitle">Manage your student records efficiently</p>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn btn-primary" (click)="add()">+ Add Student</button>
+    <input
+      class="search"
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Search by name..."
+    >
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Email</th>
+          <th>City</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of filteredStudents; track $index) {
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.age }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.city }}</td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-sm btn-primary" (click)="edit($index)">Edit</button>
+                <button class="btn btn-sm btn-danger" (click)="delete($index)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td colspan="5" class="empty-state">No students found</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
